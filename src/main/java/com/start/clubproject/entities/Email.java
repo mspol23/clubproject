@@ -1,10 +1,8 @@
 package com.start.clubproject.entities;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import jakarta.persistence.Entity;
@@ -23,13 +21,13 @@ public class Email implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	private String email;
 	
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
-	private Instant createdAt;
+	private String email;
 	
 	private Boolean isValid;
 	
+	private Boolean isMain;
+
 	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id")
@@ -37,12 +35,12 @@ public class Email implements Serializable{
 	
 	public Email() {}
 
-	public Email(String email, Instant createdAt, Boolean isValid, User user) {
+	public Email(String email, User user, Boolean isMain) {
 		super();
 		this.email = email;
-		this.createdAt = createdAt;
-		this.isValid = isValid;
+		this.isValid = true;
 		this.user = user;
+		this.isMain = isMain;
 	}
 
 	public String getEmail() {
@@ -65,16 +63,24 @@ public class Email implements Serializable{
 		return id;
 	}
 
-	public Instant getCreatedAt() {
-		return createdAt;
-	}
-
-	public void setClient(User user) {
+	public void setUser(User user) {
 		this.user = user;
 	}
 
-	public User getClient() {
+	public User getUser() {
 		return user;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+	
+	public Boolean getIsMain() {
+		return isMain;
+	}
+
+	public void setIsMain(Boolean isMain) {
+		this.isMain = isMain;
 	}
 
 	@Override
@@ -94,4 +100,9 @@ public class Email implements Serializable{
 		return Objects.equals(user, other.user) && Objects.equals(email, other.email)
 				&& Objects.equals(id, other.id);
 	}
+
+	@Override
+	public String toString() {
+		return "Email [id=" + id + ", email=" + email + ", isValid=" + isValid + "use_id=" + user.getId() + "]";
+	}	
 }
