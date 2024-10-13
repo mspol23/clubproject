@@ -5,6 +5,7 @@ import java.util.Objects;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,6 +23,7 @@ public class Email implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@Column(nullable = false, unique = true)
 	private String email;
 	
 	private Boolean isValid;
@@ -52,7 +54,7 @@ public class Email implements Serializable{
 	}
 
 	public Boolean getIsValid() {
-		return isValid;
+		return isValid;		
 	}
 
 	public void setIsValid(Boolean isValid) {
@@ -82,10 +84,10 @@ public class Email implements Serializable{
 	public void setIsMain(Boolean isMain) {
 		this.isMain = isMain;
 	}
-
+	
 	@Override
 	public int hashCode() {
-		return Objects.hash(user, email, id);
+		return Objects.hash(email, id, isMain, isValid, user);
 	}
 
 	@Override
@@ -97,12 +99,13 @@ public class Email implements Serializable{
 		if (getClass() != obj.getClass())
 			return false;
 		Email other = (Email) obj;
-		return Objects.equals(user, other.user) && Objects.equals(email, other.email)
-				&& Objects.equals(id, other.id);
+		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
+				&& Objects.equals(isMain, other.isMain) && Objects.equals(isValid, other.isValid)
+				&& Objects.equals(user, other.user);
 	}
 
 	@Override
 	public String toString() {
-		return "Email [id=" + id + ", email=" + email + ", isValid=" + isValid + "use_id=" + user.getId() + "]";
+		return "Email [id=" + id + ", email=" + email + ", isValid=" + isValid + "]";
 	}	
 }

@@ -2,10 +2,8 @@ package com.start.clubproject.entities;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import com.start.clubproject.entities.enums.UserRole;
 
@@ -22,16 +20,17 @@ public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private Long id;
 	private String name;
 	private UserRole role;
 	
 	@OneToMany(mappedBy = "user")
-	private Set<Email> emails = new HashSet<>();
+	private List<Email> emails = new ArrayList<>();
 	
 	@OneToMany(mappedBy = "user")
 	private List<Password> passwords = new ArrayList<>();
+
 	
 	public User() {
 	}
@@ -40,6 +39,18 @@ public class User implements Serializable {
 		super();
 		this.name = name;
 		this.role = role;
+	}
+	
+//	public Email getMainEmail() {
+//		return emails.stream().filter(item -> item.getIsMain() == true).findAny().get();
+//	}
+//
+//	public Password getValidPassword() {
+//		return passwords.stream().filter(item -> item.getIsValid() == true).findAny().get();
+//	}
+
+	public Long getId() {
+		return id;
 	}
 
 	public String getName() {
@@ -50,10 +61,6 @@ public class User implements Serializable {
 		this.name = name;
 	}
 
-	public Long getId() {
-		return id;
-	}
-	
 	public UserRole getRole() {
 		return role;
 	}
@@ -61,30 +68,18 @@ public class User implements Serializable {
 	public void setRole(UserRole role) {
 		this.role = role;
 	}
-	
-	public Set<Email> getEmails(){
+
+	public List<Email> getEmails() {
 		return emails;
 	}
 	
-	public Email getMainEmail() {
-		return emails.stream().filter(item -> item.getIsMain() == true).findAny().get();
-	}
-
-	public Password getValidPassword() {
-		return passwords.stream().filter(item -> item.getIsValid() == true).findAny().get();
+	public List<Password> getPasswords() {
+		return passwords;
 	}
 
 	@Override
 	public int hashCode() {
 		return Objects.hash(id, name);
-	}
-
-	public List<Password> getPasswords() {
-		return passwords;
-	}
-
-	public void setPasswords(List<Password> passwords) {
-		this.passwords = passwords;
 	}
 
 	@Override
@@ -101,6 +96,6 @@ public class User implements Serializable {
 
 	@Override
 	public String toString() {
-		return "User [id=" + id + ", name=" + name + ", emails=" + emails + "]";
+		return "User [id=" + id + ", name=" + name + "]";
 	}
 }

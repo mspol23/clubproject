@@ -13,4 +13,9 @@ public interface EmailRepository extends JpaRepository<Email, Long> {
 	@Query("SELECT e.user FROM Email e WHERE e.email = :email")
 	User findUserByEmail(@Param("email") String email);
 	
+	Email findByUserAndIsMainTrue(User user);
+//	
+//	@Query("SELECT e FROM Email e WHERE e.user = :user AND e.isMain = true")
+//	Email findUserMainEmail(@Param("user") User user);
+	
 }

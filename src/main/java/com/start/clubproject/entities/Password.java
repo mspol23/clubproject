@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -19,7 +21,7 @@ public class Password implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy = GenerationType.UUID)
 	private Long id;
 	
 	@Column(name = "passwords")
@@ -29,6 +31,7 @@ public class Password implements Serializable{
 	
 	private Boolean isValid;
 	
+	@JsonIgnore
 	@ManyToOne
 	@JoinColumn(name = "user_id")
 	private User user;
@@ -101,5 +104,12 @@ public class Password implements Serializable{
 		Password other = (Password) obj;
 		return Objects.equals(createdAt, other.createdAt) && Objects.equals(id, other.id)
 				&& Objects.equals(password, other.password);
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "Password [id=" + id + ", password=" + password + ", createdAt=" + createdAt + ", isValid=" + isValid
+				+ "]";
+	}
+	
 }

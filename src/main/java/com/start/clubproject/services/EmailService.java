@@ -1,6 +1,5 @@
 package com.start.clubproject.services;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +12,7 @@ import com.start.clubproject.services.exceptions.ResourceNotFoundException;
 
 @Service
 public class EmailService {
-	
-	public static DateTimeFormatter fmt = DateTimeFormatter.ISO_INSTANT;
-	
+		
 	@Autowired
 	public EmailRepository repository;
 	
@@ -44,5 +41,11 @@ public class EmailService {
 		Email email = findById(id);
 		repository.deleteById(id);
 		return email;
+	}
+	
+	public Email findActiveEmailByUser(User user) {
+		Email entity = repository.findByUserAndIsMainTrue(user);
+		System.out.println("GET EMAIL BY USER findByUser(User user) ===>>>" + entity);
+		return entity;
 	}
 }
