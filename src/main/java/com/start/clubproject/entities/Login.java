@@ -17,14 +17,16 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Table;
 
 @Entity
+@Table(name = "logins")
 public class Login implements Serializable, UserDetails {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private Long id;
+	private String id;
 
 	@OneToOne
 	@JoinColumn(name = "user_id")
@@ -69,8 +71,16 @@ public class Login implements Serializable, UserDetails {
 		this.password = password;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
+	}
+
+	public UserRole getRole() {
+		return role;
+	}
+
+	public void setRole(UserRole role) {
+		this.role = role;
 	}
 
 	@Override
@@ -89,6 +99,11 @@ public class Login implements Serializable, UserDetails {
 		Login other = (Login) obj;
 		return Objects.equals(email, other.email) && Objects.equals(id, other.id)
 				&& Objects.equals(password, other.password) && Objects.equals(user, other.user);
+	}
+
+	@Override
+	public String toString() {
+		return "Login [id=" + id + ", email=" + email + ", password=" + password + ", role=" + role + "]";
 	}
 
 	@Override

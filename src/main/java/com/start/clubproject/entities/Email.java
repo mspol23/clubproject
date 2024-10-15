@@ -15,13 +15,13 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "tb_email")
+@Table(name = "emails")
 public class Email implements Serializable{
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@GeneratedValue(strategy = GenerationType.UUID)
+	private String id;
 	
 	@Column(nullable = false, unique = true)
 	private String email;
@@ -61,7 +61,7 @@ public class Email implements Serializable{
 		this.isValid = isValid;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
@@ -73,7 +73,7 @@ public class Email implements Serializable{
 		return user;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 	

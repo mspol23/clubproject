@@ -12,11 +12,11 @@ import com.start.clubproject.repositories.LoginRepository;
 public class AuthorizationService implements UserDetailsService {
 
 	@Autowired
-	private LoginRepository loginRepository;
+	private LoginService loginService;
 	
 	@Override
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-		return loginRepository.findByEmail(email);
+		return loginService.findByEmail(email);
 	}
 
 }

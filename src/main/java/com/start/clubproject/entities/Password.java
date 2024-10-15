@@ -17,12 +17,12 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "passwords")
-public class Password implements Serializable{
+public class Password implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private Long id;
+	private String id;
 	
 	@Column(name = "passwords")
 	private String password;
@@ -39,20 +39,19 @@ public class Password implements Serializable{
 	public Password() {
 	}
 
-	public Password(Long id, String password, User user) {
+	public Password(User user, String password) {
 		super();
-		this.id = id;
+		this.user = user;
 		this.password = password;
 		this.createdAt = Instant.now();
-		this.user = user;
 		this.isValid = true;
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -66,10 +65,6 @@ public class Password implements Serializable{
 
 	public Instant getCreatedAt() {
 		return createdAt;
-	}
-
-	public void setCreatedAt(Instant createdAt) {
-		this.createdAt = createdAt;
 	}
 
 	public User getUser() {

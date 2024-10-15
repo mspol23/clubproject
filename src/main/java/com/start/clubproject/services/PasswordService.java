@@ -18,4 +18,8 @@ public class PasswordService {
 		System.out.println("FOUND PASSWORD ENTITY findByUser(User user) =====>>>" + entity);
 		return entity;
 	}
+	
+	public Password create(User user, String password ) {
+		return repository.save(new Password(user, password));
+	}
 }

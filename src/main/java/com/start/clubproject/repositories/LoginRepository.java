@@ -5,6 +5,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.start.clubproject.entities.Login;
 
-public interface LoginRepository extends JpaRepository<Login, Long> {
+public interface LoginRepository extends JpaRepository<Login, String> {
 	UserDetails findByEmail(String email);
 }

@@ -20,7 +20,7 @@ public class EmailService {
 		return repository.findAll();
 	}
 	
-	public Email findById(Long id) {
+	public Email findById(String id) {
 		return repository.findById(id).orElseThrow(() -> new ResourceNotFoundException(id));
 	}
 	
@@ -32,12 +32,11 @@ public class EmailService {
 	    return repository.findUserByEmail(email);
 	}
 	
-	public Email create(Email email) {
-		Email newEmail = new Email(email.getEmail(), email.getUser(), email.getIsMain());
-		return repository.save(newEmail);
+	public Email create(String email, User user, Boolean isMain) {
+		return repository.save(new Email(email, user, isMain));
 	}
 	
-	public Email delete(Long id) {
+	public Email delete(String id) {
 		Email email = findById(id);
 		repository.deleteById(id);
 		return email;

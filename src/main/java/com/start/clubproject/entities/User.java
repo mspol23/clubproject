@@ -14,14 +14,15 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
-@Entity(name = "users")
+@Entity
 @Table(name = "users")
 public class User implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.UUID)
-	private Long id;
+	private String id;
+	
 	private String name;
 	private UserRole role;
 	
@@ -41,15 +42,15 @@ public class User implements Serializable {
 		this.role = role;
 	}
 	
-//	public Email getMainEmail() {
-//		return emails.stream().filter(item -> item.getIsMain() == true).findAny().get();
-//	}
-//
-//	public Password getValidPassword() {
-//		return passwords.stream().filter(item -> item.getIsValid() == true).findAny().get();
-//	}
+	public Email getMainEmail() {
+		return emails.stream().filter(item -> item.getIsMain() == true).findAny().get();
+	}
 
-	public Long getId() {
+	public Password getValidPassword() {
+		return passwords.stream().filter(item -> item.getIsValid() == true).findAny().get();
+	}
+
+	public String getId() {
 		return id;
 	}
 
@@ -79,7 +80,7 @@ public class User implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, name);
+		return Objects.hash(emails, id, name, passwords, role);
 	}
 
 	@Override
@@ -91,7 +92,8 @@ public class User implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		User other = (User) obj;
-		return Objects.equals(id, other.id) && Objects.equals(name, other.name);
+		return Objects.equals(emails, other.emails) && Objects.equals(id, other.id) && Objects.equals(name, other.name)
+				&& Objects.equals(passwords, other.passwords) && role == other.role;
 	}
 
 	@Override
